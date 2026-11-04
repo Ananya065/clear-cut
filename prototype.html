@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clear Cut | Trust-first AI editing for Shorts (concept)</title>
+<style>
+:root{--bg:#f6f6f8;--sf:#fff;--fg:#111;--mut:#5a5a62;--line:#dcdce2;--acc:#e5322d;--acc2:#7c4dff;--ok:#0b7a3b;--warn:#a05a00;--info:#0b57d0;--on:#fff;--sh:0 10px 40px rgba(20,20,60,.12)}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0b10;--sf:#17171f;--fg:#f4f4f7;--mut:#b4b4c0;--line:#2e2e3a;--acc:#ff5a52;--acc2:#a68bff;--ok:#6fdc8c;--warn:#ffb74d;--info:#8ab4f8;--on:#0b0b10;--sh:0 10px 40px rgba(0,0,0,.5)}}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 400px at 50% -100px,color-mix(in srgb,var(--acc2) 22%,transparent),transparent),var(--bg);color:var(--fg);font:16px/1.45 Roboto,system-ui,sans-serif}
+main{max-width:440px;margin:0 auto;padding:16px 14px 48px}
+h1{font-size:1.5rem;margin:4px 0;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}h1 i{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--acc),var(--acc2))}
+h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);margin:24px 2px 8px}
+.note{font-size:.82rem;color:var(--mut)}
+button,select{font:inherit;color:var(--fg)}
+button{min-height:48px;padding:0 18px;border-radius:24px;border:1.5px solid var(--line);background:var(--sf);cursor:pointer;font-weight:600;transition:transform .12s,background .2s}
+button:active{transform:scale(.97)}button.pri{background:linear-gradient(135deg,var(--acc),#c2185b);border:0;color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}select{min-height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--sf);padding:0 10px}
+:focus-visible{outline:3px solid var(--info);outline-offset:2px}
+.stage{position:relative;height:250px;border-radius:24px;overflow:hidden;box-shadow:var(--sh);background:linear-gradient(160deg,#2a3558,#6b3f86 60%,#b5547a);display:flex;flex-direction:column;justify-content:flex-end;align-items:center;transition:background .6s}
+.stage[data-bg="1"]{background:linear-gradient(160deg,#ff9a3c,#e8453c 50%,#3b5bdb)}
+.stage:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.55))}
+.cap{position:relative;z-index:1;margin:0 0 16px;background:rgba(0,0,0,.72);color:#fff;padding:5px 12px;border-radius:8px;font-size:1rem;font-weight:500;max-width:88%;text-align:center}
+.cap:empty{display:none}
+.ai{position:absolute;z-index:2;top:12px;left:12px;background:rgba(0,0,0,.78);color:#fff;border-radius:14px;padding:3px 10px;font-size:.8rem;font-weight:700}
+.wave{position:absolute;z-index:1;top:14px;right:14px;display:flex;gap:3px;align-items:center;height:24px;opacity:0}
+.stage.live .wave{opacity:1}.wave s{width:3px;height:6px;background:#fff;border-radius:2px;animation:w .8s ease-in-out infinite}
+.wave s:nth-child(2n){animation-delay:.15s}.wave s:nth-child(3n){animation-delay:.3s}@keyframes w{50%{height:22px}}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 2px;min-height:30px}
+.chip{font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:14px;background:color-mix(in srgb,var(--acc2) 16%,transparent);color:var(--fg);border:1px solid color-mix(in srgb,var(--acc2) 40%,transparent)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:var(--sf);border:1.5px solid var(--line);border-radius:18px}
+.seg button{border:0;border-radius:14px;min-height:46px;font-size:.84rem;padding:0 6px;background:transparent}
+.seg button[aria-pressed=true]{background:var(--fg);color:var(--bg);box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.card{background:var(--sf);border:1px solid var(--line);border-radius:20px;padding:14px;margin:10px 0;box-shadow:0 2px 12px rgba(20,20,60,.06);animation:in .35s ease both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.top{display:flex;gap:12px;align-items:center}.top h3{margin:0;font-size:1.02rem}
+.ring{--c:var(--ok);flex:none;width:54px;height:54px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center}
+.ring.lo{--c:var(--warn)}.ring b{width:42px;height:42px;border-radius:50%;background:var(--sf);display:grid;place-items:center;font-size:.9rem}
+.badge{display:inline-block;font-size:.74rem;font-weight:700;border-radius:10px;padding:2px 9px;border:1px solid var(--line);margin:8px 4px 0 0}
+.low{color:var(--warn)}.good{color:var(--ok)}
+ul.log{padding-left:18px;margin:6px 0;font-size:.86rem;color:var(--mut)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin-top:8px}
+.stats div{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:8px 2px}.stats b{display:block;font-size:1.3rem}.stats span{font-size:.68rem;color:var(--mut)}
+.alert{border-left:4px solid var(--warn);background:var(--sf);padding:10px 12px;border-radius:10px;margin:10px 0;font-size:.9rem}
+dialog{border:1px solid var(--line);border-radius:22px;background:var(--sf);color:var(--fg);max-width:380px;padding:18px;box-shadow:var(--sh)}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body><main>
+<h1><i aria-hidden="true"></i>Clear Cut</h1>
+<p class="note">Concept design for a UX case study. Not affiliated with YouTube or Google. Only the live-caption feature uses real speech recognition; other suggestions are scripted.</p>
+<div class="stage" id="stage" data-bg="0" role="img" aria-label="Shorts editor preview"><span class="ai" id="ailabel" hidden>AI ⓘ</span><div class="wave" aria-hidden="true"><s></s><s></s><s></s><s></s><s></s><s></s><s></s></div><p class="cap" id="cap"></p></div>
+<div class="chips" id="chips" aria-label="AI edits on this Short"></div>
+
+<h2>How much should AI do on its own?</h2>
+<div class="seg" role="group" aria-label="Trust mode" id="modes">
+<button data-m="suggest" aria-pressed="true">Suggest only</button><button data-m="ask" aria-pressed="false">Ask first</button><button data-m="auto" aria-pressed="false">Auto-apply safe</button></div>
+<p class="note" id="modehelp"></p>
+<div class="row"><button class="pri" id="run">Run AI pass</button><button id="undo" disabled>Undo last</button></div>
+
+<h2>AI suggestions</h2>
+<div id="list" aria-live="polite"></div>
+
+<h2>What AI changed</h2>
+<ul class="log" id="log"><li>Nothing yet.</li></ul>
+<div class="stats"><div><b id="n-acc">0</b><span>Accepted</span></div><div><b id="n-auto">0</b><span>Auto</span></div><div><b id="n-un">0</b><span>Undone</span></div><div><b id="n-rate">0%</b><span>Undo rate</span></div></div>
+
+<h2>Before you publish</h2>
+<div class="card"><label style="display:flex;gap:12px;align-items:flex-start"><input type="checkbox" id="disc" style="width:26px;height:26px;margin-top:2px"><span><b>Altered or synthetic content</b><br><span class="note">Tick this when realistic sounds or visuals were made or changed with AI.</span></span></label>
+<div id="why" class="note" style="margin-top:8px"></div></div>
+<div id="warn"></div>
+<p class="note">Illustrative rules based on public YouTube guidance (checked Nov 2026); YouTube Help is the authority. Live captions use your browser’s speech recognition, which may send audio to the browser maker’s service. Nothing is stored by this page.</p>
+
+<dialog id="dlg" aria-labelledby="dt"><h3 id="dt"></h3><p id="db"></p><div class="row"><button class="pri" id="ok">Apply</button><button id="no">Cancel</button></div></dialog>
+</main>
+<script>
+var S=[
+{id:'cap',t:'Auto-captions',d:'Speech to caption text',c:96,k:0,ch:'Adds caption text. Video and audio stay the same.'},
+{id:'noise',t:'Remove background noise',d:'Cleans street sound under your voice',c:91,k:0,ch:'Audio is filtered. Your voice stays yours.'},
+{id:'dub',t:'Dub into Tamil',d:'AI voice reads your script in Tamil',c:78,k:1,ch:'Adds a new audio track. Check the voice rules before publishing.'},
+{id:'bg',t:'Replace background',d:'AI-generated realistic street scene',c:64,k:2,ch:'Visuals are replaced with a realistic generated scene.'}];
+var HELP={suggest:'You decide on every edit. Nothing changes until you tap Apply.',ask:'You see what will change and confirm each edit first.',auto:'Only edits at 90% confidence or more that need no disclosure apply alone. Everything else asks.'};
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null;
+var mode='suggest',shown=false,applied=[],gone={},hist=[],N={acc:0,auto:0,un:0},auto={},lang='en-IN',heard='Aaj hum seekhenge: street food safety',stat='';
+var $=function(i){return document.getElementById(i)};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+function find(id){return S.filter(function(s){return s.id===id})[0]}
+function log(m){hist.push(m);$('log').innerHTML=hist.slice(-6).map(function(h){return '<li>'+esc(h)+'</li>'}).join('')}
+function apply(id,a){if(applied.indexOf(id)>-1)return;applied.push(id);N.acc++;if(a){N.auto++;auto[id]=1}log((a?'Auto-applied: ':'Applied: ')+find(id).t);render()}
+function undo(id){var i=applied.indexOf(id);if(i<0)return;applied.splice(i,1);N.un++;delete auto[id];log('Undid: '+find(id).t);render()}
+function ask(id){var s=find(id);$('dt').textContent='Apply “'+s.t+'”?';$('db').textContent=s.ch+(s.k?' This may need an AI disclosure when you publish.':'');
+$('ok').onclick=function(){$('dlg').close();apply(id,false)};$('no').onclick=function(){$('dlg').close()};$('dlg').showModal();$('ok').focus()}
+function lvl(k){return k===2?'Disclosure likely required':k===1?'Check disclosure rules':'No disclosure needed'}
+function listen(){
+ if(!SR){stat='Speech recognition is not available in this browser (try Chrome or Edge). Using the scripted sample.';return render()}
+ try{rec=new SR()}catch(e){stat='Could not start speech recognition.';return render()}
+ rec.lang=lang;rec.interimResults=true;rec.maxAlternatives=1;var got=null;
+ rec.onresult=function(e){var r=e.results[e.results.length-1];heard=r[0].transcript;if(r.isFinal)got=r[0].confidence;render()};
+ rec.onerror=function(e){stat=e.error==='not-allowed'?'Microphone blocked. Allow it in your browser, or keep the scripted sample.':'Could not hear clearly ('+e.error+'). Try again.';$('stage').classList.remove('live');render()};
+ rec.onend=function(){$('stage').classList.remove('live');var c=find('cap');
+  if(got>0){c.c=Math.round(got*100);stat='Heard with '+c.c+'% confidence.'+(c.c<70?' That is low, so review the text closely.':'');
+   if(mode==='auto'&&c.c>=90&&applied.indexOf('cap')<0)apply('cap',true)}
+  else if(!stat||stat.indexOf('Listening')===0)stat='Done. This browser gave no confidence score, so the sample score stays.';render()};
+ stat='Listening… speak one sentence.';$('stage').classList.add('live');try{rec.start()}catch(e){stat='Already listening.'}render()}
+function render(){
+ $('modehelp').textContent=HELP[mode];
+ Array.prototype.forEach.call($('modes').children,function(b){b.setAttribute('aria-pressed',b.dataset.m===mode)});
+ var h='';
+ if(shown){S.forEach(function(s){if(gone[s.id])return;var on=applied.indexOf(s.id)>-1,lo=s.c<70;
+  h+='<div class="card"><div class="top"><div class="ring'+(lo?' lo':'')+'" style="--p:'+s.c+'" role="img" aria-label="Confidence '+s.c+' percent"><b>'+s.c+'</b></div><div><h3>'+s.t+'</h3><div class="note">'+s.d+'</div></div></div>'+
+  '<span class="badge '+(lo?'low':'good')+'">'+(lo?'Review closely':'Confident')+'</span><span class="badge">'+lvl(s.k)+'</span>'+(auto[s.id]?'<span class="badge good">Auto-applied</span>':'')+
+  '<div class="note" style="margin-top:8px">'+s.ch+'</div>';
+  if(s.id==='cap')h+='<div class="row"><select id="lang" aria-label="Spoken language"><option value="en-IN"'+(lang==='en-IN'?' selected':'')+'>English (India)</option><option value="hi-IN"'+(lang==='hi-IN'?' selected':'')+'>Hindi</option></select><button data-l="1">Try live captions</button></div><div class="note" aria-live="polite">'+esc(stat)+'</div><div class="note">Heard: “'+esc(heard)+'”</div>';
+  h+='<div class="row">'+(on?'<button data-u="'+s.id+'">Undo</button>':'<button class="pri" data-a="'+s.id+'">Apply</button><button data-x="'+s.id+'">Dismiss</button>')+'</div></div>'});
+  if(!h)h='<p class="note">All suggestions handled.</p>'}
+ else h='<p class="note">Run the AI pass to see suggestions.</p>';
+ $('list').innerHTML=h;$('undo').disabled=!applied.length;
+ $('cap').textContent=applied.indexOf('cap')>-1?heard:'';
+ $('stage').dataset.bg=applied.indexOf('bg')>-1?1:0;
+ $('chips').innerHTML=applied.map(function(id){return '<span class="chip">AI · '+find(id).t+'</span>'}).join('')||'<span class="note">No AI edits yet.</span>';
+ var req=0,why=[];applied.forEach(function(id){var s=find(id);if(s.k===2){req=1;why.push(s.t+' (realistic generated visuals)')}else if(s.k===1)why.push(s.t+' (check voice rules)')});
+ $('why').textContent=why.length?'Triggered by: '+why.join('; ')+'.':'No applied edit needs disclosure so far.';
+ if(!$('disc').dataset.touched)$('disc').checked=!!req;
+ $('ailabel').hidden=!$('disc').checked;
+ $('warn').innerHTML=(req&&!$('disc').checked)?'<div class="alert" role="alert">You used realistic AI visuals but did not tick disclosure. YouTube may add a label automatically. If it is wrong, you can update the status in Studio.</div>':'';
+ $('n-acc').textContent=N.acc;$('n-auto').textContent=N.auto;$('n-un').textContent=N.un;$('n-rate').textContent=(N.acc?Math.round(N.un/N.acc*100):0)+'%'}
+$('modes').addEventListener('click',function(e){var m=e.target.dataset.m;if(m){mode=m;render()}});
+$('run').addEventListener('click',function(){var b=$('run');b.disabled=true;b.textContent='Analysing your Short…';
+ setTimeout(function(){shown=true;gone={};b.disabled=false;b.textContent='Run AI pass again';if(mode==='auto')S.forEach(function(s){if(s.c>=90&&!s.k)apply(s.id,true)});render()},700)});
+$('list').addEventListener('click',function(e){var t=e.target;
+ if(t.dataset.a)(mode==='suggest'&&!find(t.dataset.a).k)?apply(t.dataset.a,false):ask(t.dataset.a);
+ if(t.dataset.u)undo(t.dataset.u);if(t.dataset.l)listen();
+ if(t.dataset.x){gone[t.dataset.x]=1;log('Dismissed: '+find(t.dataset.x).t);render()}});
+$('list').addEventListener('change',function(e){if(e.target.id==='lang')lang=e.target.value});
+$('undo').addEventListener('click',function(){if(applied.length)undo(applied[applied.length-1])});
+$('disc').addEventListener('change',function(){this.dataset.touched=1;render()});
+render();
+</script></body></html>

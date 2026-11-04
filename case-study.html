@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clear Cut | Case study</title>
+<style>
+:root{--bg:#fff;--fg:#0f0f0f;--mut:#4a4a4a;--card:#f4f4f4;--line:#cfcfcf;--acc:#b00000}
+@media(prefers-color-scheme:dark){:root{--bg:#0f0f0f;--fg:#f1f1f1;--mut:#bdbdbd;--card:#1c1c1c;--line:#444;--acc:#ff8a8a}}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 Roboto,system-ui,sans-serif}
+main{max-width:740px;margin:0 auto;padding:24px 16px 72px}
+h1{font-size:2rem;line-height:1.2;margin:.3em 0}h2{margin:2em 0 .4em;font-size:1.35rem}h3{margin:1.2em 0 .2em;font-size:1.05rem}
+p,li{color:var(--mut)}a{color:var(--acc)}a:focus-visible{outline:3px solid #0b57d0;outline-offset:2px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;display:block;overflow-x:auto}th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;color:var(--mut)}th{color:var(--fg)}
+</style></head><body><main>
+<p><a href="prototype.html">Open the working prototype</a></p>
+<h1>Clear Cut: helping Shorts creators stay in control of AI edits and disclosure</h1>
+<p class="box"><strong>Status: concept design.</strong> Built from public sources, expert review, and a clickable prototype. Live captions use the browser’s real speech recognition (Chrome or Edge) and its confidence score; the other three suggestions are scripted. Not affiliated with YouTube or Google. Role: sole designer and prototype builder.</p>
+
+<h2>1. The problem</h2>
+<p>Creators now edit Shorts with AI: captions, noise removal, dubbing, generated backgrounds. Disclosure is decided later, on the publish screen. By then a creator may not remember which edits used AI, which can lead to a wrong or missing label. YouTube has required disclosure of realistic altered or synthetic content since 2024 and, from May 2026, moved that label to a more prominent spot and began labeling undisclosed content automatically.</p>
+<p><strong>Design question:</strong> how might we let creators use AI quickly while always knowing what it changed and what it means for disclosure?</p>
+
+<h2>2. What the public record says</h2>
+<table><tr><th>Finding</th><th>Why it matters for design</th></tr>
+<tr><td>Creators must disclose realistic altered or synthetic content. <a href="https://kingy.ai/?p=16169">Source</a></td><td>Disclosure is a creator duty, so the tool should help them meet it.</td></tr>
+<tr><td>On Shorts the label appears as an overlay on the video; long-form shows it under the player. <a href="https://www.techwyse.com/news/platform-updates/youtube-automatic-ai-labels-disclosure-may-2026">Source</a></td><td>Labels are very visible, so mistakes are costly to a creator’s image.</td></tr>
+<tr><td>Automatic detection starts in May 2026 and adds a label when a creator did not. <a href="https://www.fonearena.com/blog/483734/youtube-visible-ai-disclosure-labels-videos-shorts.html/amp">Source</a></td><td>Forgetting is no longer a safe default. The tool should prevent it.</td></tr>
+<tr><td>Creators can update disclosure status in Studio if wrongly flagged, but some labels stay. <a href="https://techeconomy.ng/youtube-automatic-ai-video-labels">Source</a></td><td>Prevention beats appeals, because not every label can be removed.</td></tr>
+<tr><td>A label alone does not change recommendations or monetization. <a href="https://kingy.ai/?p=16169">Source</a></td><td>Messaging should reassure: disclosing is not a penalty.</td></tr>
+<tr><td>YouTube offers Edit with AI, auto-dubbing in 20+ languages, and Dream Screen. <a href="https://www.storyboard18.com/amp/digital/youtube-to-let-creators-use-ai-digital-twins-to-produce-shorts-88115.htm">Source</a></td><td>Several AI edits can stack in one Short, so tracking them matters.</td></tr></table>
+<p>Press coverage also notes that detection tools can misfire on edits like cleanup and dubbing, which supports showing creators exactly what each AI edit did.</p>
+
+<h2>3. Insight</h2>
+<p>The disclosure decision depends on what AI did, but the creator is asked at the end, when that knowledge is gone. <strong>This is my hypothesis from the sources above, not a tested finding.</strong> The design moves the knowledge to where the edits happen.</p>
+
+<h2>4. Design principles</h2>
+<ol><li><strong>Visible change:</strong> every AI edit says in plain words what it changed.</li>
+<li><strong>Reversible by default:</strong> any edit can be undone in one tap.</li>
+<li><strong>Control matches comfort:</strong> creators choose how much AI does alone.</li>
+<li><strong>Disclosure follows the edit:</strong> the publish screen is pre-filled from edit history, with reasons.</li></ol>
+
+<h2>5. The trust framework</h2>
+<table><tr><th>Mode</th><th>What AI does</th><th>Who it suits</th></tr>
+<tr><td>Suggest only</td><td>Shows suggestions. Nothing changes until Apply.</td><td>New or cautious creators</td></tr>
+<tr><td>Ask first</td><td>Shows a confirmation with what will change.</td><td>Most creators</td></tr>
+<tr><td>Auto-apply safe edits</td><td>Applies only edits with confidence of 90% or more that need no disclosure. Everything else asks.</td><td>Fast, experienced creators</td></tr></table>
+<p>Each suggestion shows a confidence bar, a plain-language change summary, and a disclosure level (none, check, likely required). Below 70% confidence it is flagged “review closely.” Edits that could need disclosure never auto-apply.</p>
+
+<h2>6. Key decisions and trade-offs</h2>
+<h3>Auto-apply threshold</h3>
+<p>I set 90% with a no-disclosure condition. A lower threshold saves time but risks silent mistakes on a public label. The threshold is an assumption to tune with real undo data.</p>
+<h3>Pre-ticked disclosure</h3>
+<p>The toggle is pre-ticked only when a realistic generated visual was applied, with the reason shown. Pre-ticking more often would over-label and annoy creators. Pre-ticking less would hide risk. If the creator unticks it, a warning explains that YouTube may label automatically and that Studio allows corrections.</p>
+<h3>Confirmation friction</h3>
+<p>Edits that could need disclosure always ask, even in Suggest mode. This adds a tap but prevents a surprise label.</p>
+<h3>Considered and cut</h3>
+<p>A single global “AI on/off” switch (too blunt), and an AI explanation paragraph per edit (too long for a 30-second editing flow).</p>
+
+<h2>6b. What is real and what is scripted</h2><p>In the captions card the creator can speak a sentence in English (India) or Hindi. The browser’s speech recognition returns the text and, where the browser provides it, a confidence score. That real score drives the same logic as the scripted cards: high confidence can auto-apply in Auto mode, low confidence is flagged for close review. This lets the trust behavior be tested against real, imperfect output. Browser speech recognition may send audio to the browser maker’s service, so the prototype says so on the page and stores nothing. Noise removal, dubbing and background replacement remain scripted.</p>
+<h2>7. States and edge cases covered</h2>
+<ul><li>Loading state while the AI pass runs, with a status message.</li>
+<li>Low confidence warnings and one-tap dismiss for unwanted suggestions.</li>
+<li>Undo for the last edit or any single edit; a running log of what AI changed.</li>
+<li>Creator ignores disclosure after using realistic visuals: alert with plain next steps.</li>
+<li>Viewer preview of the “AI ⓘ” overlay so creators see the result before publishing.</li></ul>
+
+<h2>8. Accessibility</h2>
+<p>Native buttons and dialog, 48px touch targets, visible focus rings, polite live regions for results, confidence conveyed in text as well as color, light and dark themes, and reduced-motion support. Still to do: a screen-reader pass on real devices and a contrast audit of every state.</p>
+
+<h2>9. Feasibility note for engineering</h2>
+<p>This needs per-edit confidence scores from the models, edits stored as non-destructive layers (so undo is cheap), and an edit-history record that can feed the disclosure suggestion. The disclosure rules should live in one policy service so the editor and the publish screen never disagree.</p>
+
+<h2>10. How I would validate it</h2>
+<table><tr><th>Hypothesis</th><th>Measure</th><th>Decision rule</th></tr>
+<tr><td>H1: Showing what changed makes creators accept more AI edits.</td><td>Acceptance rate per mode</td><td>Keep if acceptance rises with no rise in undo rate.</td></tr>
+<tr><td>H2: Edit history improves disclosure accuracy.</td><td>Share of Shorts with correct disclosure versus final label</td><td>Ship only if accuracy rises and auto-labels fall.</td></tr>
+<tr><td>H3: Auto-apply at 90% is safe.</td><td>Undo rate of auto-applied edits</td><td>Raise the threshold if undo is above about 10%.</td></tr></table>
+<p>First step: a short task test of the prototype with 5 creators (find what AI changed, decide on disclosure, undo an edit). Task success and hesitation points decide the next iteration.</p>
+
+<h2>11. Risks and ethics</h2>
+<p>The tool must not nudge creators to hide AI use, and its disclosure suggestions are advice, not a legal ruling. Voice and likeness of real people carry extra risk, so those edits should always ask and link to the rules.</p>
+
+<h2>12. What I would do next</h2>
+<p>Run the task test, tune the threshold from real undo data, add a bulk “review all AI edits” view for long projects, and design the same flow for Android and tablet.</p>
+
+<p class="note">Rules shown in the prototype are illustrative and based on public sources checked in November 2026. Always follow YouTube Help for the current policy.</p>
+</main></body></html>
