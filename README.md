@@ -6,7 +6,7 @@ Two UX concept projects for YouTube creators.
 A concept for an AI editing assistant where the creator stays in control. Suggestions are never applied automatically, and AI disclosure is shown before publishing.
 - Case study: https://ananya065.github.io/clear-cut/case-study.html
 - Prototype: https://ananya065.github.io/clear-cut/prototype.html
-- Figma: (paste your Figma link here)
+- Figma: https://www.figma.com/design/yVBp0zviJ7ODrTsE253iUV/Clear-Cut--AI-trust-for-Shorts?node-id=0-1&t=bOmDTQ5R7wQdqnnW-1
 
 ## First Income: helping new creators reach monetization
 A concept for a progress tracker that shows first-time creators in India where they stand and what to do next.
