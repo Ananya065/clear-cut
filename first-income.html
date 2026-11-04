@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>First Income: Concept Design Case Study</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fafafa;--fg:#161616;--mut:#5f5f5f;--card:#fff;--line:#e3e3e3;--acc:#d92d20;--tint:#fdeceb}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--fg:#f2f2f2;--mut:#a8a8a8;--card:#1c1c1c;--line:#333;--acc:#ff6b5e;--tint:#2a1715;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121212;--fg:#f2f2f2;--mut:#a8a8a8;--card:#1c1c1c;--line:#333;--acc:#ff6b5e;--tint:#2a1715;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+h1{font-size:2rem;line-height:1.2;margin:.2em 0}h2{margin-top:2.2em;font-size:1.25rem}
+.tag{color:var(--acc);font-weight:600;font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.note{background:var(--tint);border-left:4px solid var(--acc);padding:12px 16px;border-radius:8px;color:var(--fg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden;margin:6px 0 2px}.bar i{display:block;height:100%;background:var(--acc)}
+.mut{color:var(--mut);font-size:.9rem}.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:480px}td,th{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+</style></head><body><main>
+<div class="tag">UX Concept Design · YouTube Creator Ecosystem</div>
+<h1>First Income</h1>
+<p>Helping first-time creators in India see where they stand on the way to YouTube monetization, and what to do next.</p>
+<p class="note"><b>Scope note:</b> This is a concept design based on secondary research. I did not run interviews or user tests for this project. Every finding below is labeled with its source type, and my next step is testing with real creators.</p>
+
+<h2>Problem</h2>
+<p>First-time creators in India face several monetization paths at once: an early tier, full ad revenue sharing, Shorts-based routes, memberships and Super Thanks. The rules differ by route and change over time, so a new creator can't easily tell which thresholds apply to them or what to do next.</p>
+
+<h2>Evidence (secondary research)</h2>
+<div class="card"><b>1. The rules are described inconsistently.</b><br>Public guides still quote the classic 1,000 subscribers + 4,000 watch hours rule, while others describe an expanded early tier (500 subscribers, 3 public uploads in 90 days, 3,000 watch hours or 3 million Shorts views) and a separate Shorts route. <span class="mut">Source type: creator-facing blogs and news (upgrowth.in, payu.in, lilachbullock.com, Business Standard). Verify current numbers on YouTube Help.</span></div>
+<div class="card"><b>2. Several routes, one dashboard question: “where am I?”</b><br>Eligibility has three or more variables (subscribers, watch hours or Shorts views, uploads, policy status), and ad revenue sharing needs a higher tier than fan funding. <span class="mut">Source type: same guides.</span></div>
+<div class="card"><b>3. Rules change, so guides go stale.</b><br>The program was widened in 2023 and further changes have been reported for 2027. <span class="mut">Source type: news (sharesansar.com, indiatvnews.com). Treat as reported, not verified.</span></div>
+<p class="mut">Limits: I reviewed a small set of public pages, not a systematic sample of creator discussions.</p>
+
+<h2>Design hypotheses (to test, not proven)</h2>
+<ul><li>H1: Creators quit partly because the rules and their own progress are unclear.</li>
+<li>H2: A single “next step” tracker will help more than additional explanatory text.</li></ul>
+
+<h2>Concept: the First Income tracker</h2>
+<div class="grid">
+<div class="card"><b>Your route</b><p class="mut">Pick: Videos, Shorts, or Both. The tracker then shows only the thresholds that apply.</p></div>
+<div class="card"><b>Progress</b>
+<div class="mut">Subscribers 320 / 500</div><div class="bar"><i style="width:64%"></i></div>
+<div class="mut">Watch hours 1,900 / 3,000</div><div class="bar"><i style="width:63%"></i></div>
+<div class="mut">Sample numbers for illustration only.</div></div>
+<div class="card"><b>One next step</b><p class="mut">“Upload 1 more public video in the next 30 days.” Earning tools unlock in plain language as each tier is reached.</p></div></div>
+
+<h2>Design principles</h2>
+<div class="wrap"><table><tr><th>Principle</th><th>How it shows up</th></tr>
+<tr><td>Show status</td><td>Progress against the creator’s own route, not every rule at once</td></tr>
+<tr><td>Plain language</td><td>Short copy suited to first-time, non-native English readers, with Hindi as a later option</td></tr>
+<tr><td>One action</td><td>A single recommended next step on the screen</td></tr>
+<tr><td>Accessibility</td><td>Text contrast and tap-target sizes to be checked against WCAG 2.2 AA</td></tr></table></div>
+
+<h2>What I would do next</h2>
+<ul><li>Interview 5 to 8 small creators about how they learned the rules.</li>
+<li>Run a 5-person usability test of the tracker.</li>
+<li>Check the concept against YouTube’s design system and Help documentation.</li></ul>
+<p class="mut">Concept project by Ananya Mishra. Not affiliated with or endorsed by YouTube.</p>
+</main></body></html>
